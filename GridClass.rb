@@ -2,24 +2,31 @@ class TetrisGrid
   @@row=0
   @@column=0
 
-  @@shapeStorage = {
-    'squareShape' =>[[@@row,@@column],[@@row,@@column+1],[@@row+1,@@column],[@@row+1,@@column+1]],
-  }
 
   def initialize(n,m)
     @row=n
     @column=m
-    @curColumn=[]
+    @grid=populateGrid(@row,@column)
+    # @curColumn=[
   end
 
-  def populateGrid()
+  def populateGrid(row, column)
+    return Array.new(row) { Array.new(column,0) }
   end
 
   def startGame()
-    shape = createShape()
-    puts shape.join(" ") + " is the shape"
+    shape = Shape.new("squareShape")
+    p self
+    p shape
+    shape.moveColumn()
+    # while shape
+    # puts shape.join(" ") + " is the shape"
     #call createShape
     #while shapes bottom hasn't reached column move piece
+    #while shape
+    #  moveColumn
+
+   # end
       #callMoveColumn
   end
 
@@ -29,23 +36,40 @@ class TetrisGrid
 
 
   #return shape
-  def createShape()
-    return @@shapeStorage["squareShape"]
-    #create square shape but should create shapes based off of a random num
-    #look up shape info in shape Storage
-    #after create shape call movePiece throwing shape as parameters
-  end
 
-  def moveRows()
-  end
-
-  def moveColumn()
-  end
 
   def getCurrentRow()
   end
 
   def setPiece()
+  end
+ 
+  class Shape
+    @@row=0
+    @@column=0
+    @@shapeStorage = {
+      'squareShape' =>[[@@row,@@column],[@@row,@@column+1],[@@row+1,@@column],[@@row+1,@@column+1]],
+    }
+
+    def initialize(shape)
+      @shape=@@shapeStorage[shape]
+    end
+
+    def moveRows()
+      
+    end
+
+    def moveColumn()
+      p self
+    end
+
+    def createShape()
+      return @@shapeStorage["squareShape"]
+      #create square shape but should create shapes based off of a random num
+      #look up shape info in shape Storage
+      #after create shape call movePiece throwing shape as parameters
+    end
+
   end
 end
 
