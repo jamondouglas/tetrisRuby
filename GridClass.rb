@@ -7,7 +7,7 @@ class TetrisGrid
     @row=n
     @column=m
     @grid=populateGrid(@row,@column)
-    # @curColumn=[
+    @curColumn= Array.new(@column,@row)
   end
 
   def populateGrid(row, column)
@@ -15,10 +15,10 @@ class TetrisGrid
   end
 
   def startGame()
-    shape = Shape.new("squareShape")
-    p self
-    p shape
-    shape.moveColumn()
+    shape = Shape.new("squareShape", @row)
+
+    #setPiece to move shape
+    moveShape(shape)
     # while shape
     # puts shape.join(" ") + " is the shape"
     #call createShape
@@ -41,22 +41,37 @@ class TetrisGrid
   def getCurrentRow()
   end
 
-  def setPiece()
+  def moveShape(shape)
+    #p shape.shape
+    while shape.y > 0
+      shape.shape.map! {|x,y| y+1}
+      shape.y -= 1
+      p shape
+    end
+  end
+
+  def setPiece(shape)
+
+    p shape
   end
  
   class Shape
     @@row=0
     @@column=0
+    attr_accessor :shape
+    attr_accessor :y
+
     @@shapeStorage = {
       'squareShape' =>[[@@row,@@column],[@@row,@@column+1],[@@row+1,@@column],[@@row+1,@@column+1]],
     }
 
-    def initialize(shape)
+    def initialize(shape,height)
       @shape=@@shapeStorage[shape]
+      @y=height-1
     end
 
     def moveRows()
-      
+      #change columns to move shape down
     end
 
     def moveColumn()
